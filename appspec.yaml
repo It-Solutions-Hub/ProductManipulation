@@ -1,0 +1,19 @@
+version: 0.0
+os: linux
+
+files:
+  - source: ProductManipulation.war
+    destination: /opt/tomcat/apache-tomcat-9.0.75/webapps/
+
+hooks:
+  BeforeInstall:
+    - location: install_tomcat.sh
+      timeout: 300
+      runas: root
+      permissions: +x
+
+  AfterInstall:
+    - location: deploy.sh
+      timeout: 300
+      runas: root
+      permissions: +x
