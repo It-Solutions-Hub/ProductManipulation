@@ -7,7 +7,7 @@ files:
 
 hooks:
   BeforeInstall:
-    - location: install_tomcat.sh
+    - location: install.sh
       timeout: 300
       runas: root
       permissions: +x
