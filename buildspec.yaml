@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "No dependencies to install."
+  pre_build:
+    commands:
+      - echo "Fetching the WAR file from GitHub..."
+      - curl -L -o ProductManipulation.war "https://raw.githubusercontent.com/It-Solutions-Hub/ProductManipulation/main/ProductManipulation.war"
+  build:
+    commands:
+      - echo "Uploading WAR file to S3..."
+      - aws s3 cp ProductManipulation.war s3://test-bucket-cicd-pipeline/
+  post_build:
+    commands:
+      - echo "WAR file uploaded successfully."
