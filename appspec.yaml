@@ -3,7 +3,7 @@ os: linux
 
 files:
   - source: ProductManipulation.war
-    destination: /opt/tomcat/apache-tomcat-9.0.75/webapps/
+    destination: /usr/local/tomcat/tomcat/webapps/
 
 hooks:
   BeforeInstall:
