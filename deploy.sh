@@ -1,18 +1,24 @@
 #!/bin/bash
 
+# Define variables
+TOMCAT_DIR="/usr/local/tomcat/tomcat"
+WEBAPPS_DIR="$TOMCAT_DIR/webapps"
+WAR_FILE="ProductManipulation.war"
+S3_BUCKET="test-bucket-cicd-pipeline"
+
 # Stop Tomcat before deploying
-/opt/tomcat/apache-tomcat-9.0.75/bin/shutdown.sh
+sudo $TOMCAT_DIR/bin/shutdown.sh
 
 # Ensure old deployment is removed
-sudo rm -rf /opt/tomcat/apache-tomcat-9.0.75/webapps/ProductManipulation*
+sudo rm -rf $WEBAPPS_DIR/ProductManipulation*
 
 # Download the new WAR file from S3
-aws s3 cp s3://webapp-bucket-27-03/ProductManipulation.war /tmp/ProductManipulation.war
+aws s3 cp s3://$S3_BUCKET/$WAR_FILE /tmp/$WAR_FILE
 
 # Move the new WAR file to Tomcat's webapps folder
-sudo mv /tmp/ProductManipulation.war /opt/tomcat/apache-tomcat-9.0.75/webapps/
+sudo mv /tmp/$WAR_FILE $WEBAPPS_DIR/
 
 # Start Tomcat after deployment
-/opt/tomcat/apache-tomcat-9.0.75/bin/startup.sh
+sudo $TOMCAT_DIR/bin/startup.sh
 
 echo "Deployment completed successfully!"
